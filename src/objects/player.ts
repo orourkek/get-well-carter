@@ -5,6 +5,8 @@ export class Player extends Physics.Arcade.Sprite {
 
   public scene: MainScene;
 
+  public readonly JUMP_VELOCITY = 400;
+
   public body: Physics.Arcade.Body;
 
   constructor(scene: Scene) {
@@ -34,19 +36,46 @@ export class Player extends Physics.Arcade.Sprite {
   }
 
   public update(time: number, delta: number) {
+    const onTheGround = this.body.touching.down;
+
+    if (this.scene.keyboard.space.isDown && this.body.touching.down) {
+      this.setVelocityY(-(this.JUMP_VELOCITY));
+    }
+
     if (this.scene.keyboard.left.isDown) {
       this.setVelocityX(-300);
-      this.anims.play('left', true);
+      if (onTheGround) {
+        this.anims.play('left', true);
+      } else {
+        this.faceLeft();
+      }
     } else if (this.scene.keyboard.right.isDown) {
       this.setVelocityX(300);
-      this.anims.play('right', true);
+      if (onTheGround) {
+        this.anims.play('right', true);
+      } else {
+        this.faceRight();
+      }
     } else {
       if (this.body.velocity.x !== 0) {
-        const frame = this.body.velocity.x < 0 ? 2 : 3;
-        this.setVelocityX(0);
         this.anims.stop();
-        this.setFrame(frame);
+
+        if (this.body.velocity.x < 0) {
+          this.faceLeft();
+        } else {
+          this.faceRight();
+        }
+
+        this.setVelocityX(0);
       }
     }
+  }
+
+  public faceLeft() {
+    this.setFrame(2);
+  }
+
+  public faceRight() {
+    this.setFrame(3);
   }
 }
