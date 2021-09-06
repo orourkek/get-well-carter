@@ -1,11 +1,16 @@
 import { GameObjects, Scene } from 'phaser';
 import { DebugHUD } from '../objects/debug-hud';
+import { Player } from '../objects/player';
+import { Ground } from '../objects/ground';
 
 export class MainScene extends Scene {
 
   public keyboard: {
     [k: string]: Phaser.Input.Keyboard.Key;
   };
+
+  public ground: Ground;
+  public player: Player;
 
   private debugHUD: DebugHUD;
 
@@ -19,12 +24,17 @@ export class MainScene extends Scene {
   create() {
     const { centerX, centerY } = this.cameras.main;
     this.add.image(centerX, centerY, 'logo');
+
+    this.ground = new Ground(this);
+    this.player = new Player(this);
     this.debugHUD = new DebugHUD(this);
+    this.physics.add.collider(this.player, this.ground);
     this.cameras.main.fadeIn(300, 0, 0, 0);
   }
 
   update(time: number, delta: number) {
     this.debugHUD.update(time, delta);
+    this.player.update(time, delta);
   }
 
   public gameOver(status: 'win' | 'lose', message = '') {
