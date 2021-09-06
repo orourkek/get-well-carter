@@ -18,7 +18,7 @@ export class Player extends Physics.Arcade.Sprite {
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
 
-    this.body.setBounce(0.5, 0.5);
+    this.body.setBounce(0.3, 0.3);
 
     this.scene.anims.create({
       key: 'left',
