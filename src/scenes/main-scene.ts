@@ -1,4 +1,4 @@
-import { GameObjects, Scene } from 'phaser';
+import { Input, Scene } from 'phaser';
 import { DebugHUD } from '../objects/debug-hud';
 import { Player } from '../objects/player';
 import { Ground } from '../objects/ground';
@@ -6,7 +6,9 @@ import { Ground } from '../objects/ground';
 export class MainScene extends Scene {
 
   public keyboard: {
-    [k: string]: Phaser.Input.Keyboard.Key;
+    space: Input.Keyboard.Key;
+    left: Input.Keyboard.Key;
+    right: Input.Keyboard.Key;
   };
 
   public ground: Ground;
@@ -24,6 +26,12 @@ export class MainScene extends Scene {
   create() {
     const { centerX, centerY } = this.cameras.main;
     this.add.image(centerX, centerY, 'logo');
+
+    this.keyboard = {
+      space: this.input.keyboard.addKey(Input.Keyboard.KeyCodes.SPACE),
+      left: this.input.keyboard.addKey(Input.Keyboard.KeyCodes.A),
+      right: this.input.keyboard.addKey(Input.Keyboard.KeyCodes.D),
+    };
 
     this.ground = new Ground(this);
     this.player = new Player(this);
