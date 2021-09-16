@@ -14,5 +14,8 @@ export class Vehicle extends Physics.Arcade.Sprite {
     this.setFrame(PMath.Between(0, 9));
 
     this.scene.add.existing(this);
+    this.scene.physics.add.existing(this);
+
+    // this.setVelocityX(PMath.Between(-100, 100));
   }
 }

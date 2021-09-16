@@ -1,4 +1,4 @@
-import { Input, Scene, GameObjects } from 'phaser';
+import { Math as PMath, Input, Scene, GameObjects } from 'phaser';
 import { DebugHUD } from '../objects/debug-hud';
 import { Player } from '../objects/player';
 import { Ground } from '../objects/ground';
@@ -53,10 +53,10 @@ export class MainScene extends Scene {
 
     this.ground = new Ground(this);
     this.player = new Player(this);
+    this.vehicles = this.makeVehicles();
     this.debugHUD = new DebugHUD(this);
     this.physics.add.collider(this.player, this.ground);
-
-    this.vehicles = this.makeVehicles();
+    this.physics.add.collider(this.vehicles, this.ground);
 
     const hOffset = -(this.cameras.main.width / 3);
     const vOffset = (
@@ -92,6 +92,9 @@ export class MainScene extends Scene {
 
   startGame() {
     this.player.setVelocityX(250);
+    this.vehicles.children.each((vehicle: Vehicle) => {
+      vehicle.setVelocityX(PMath.Between(50, 250));
+    })
   }
 
   gameOver(status: 'win' | 'lose', message = '') {
@@ -104,7 +107,7 @@ export class MainScene extends Scene {
 
   private makeVehicles(): GameObjects.Group {
     const world = this.physics.world.bounds;
-    const spacing = 100;
+    const spacing = 200;
     const y = this.ground.body.top;
     const group = this.add.group();
 
