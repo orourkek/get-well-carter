@@ -2,6 +2,7 @@ import { GameObjects, Scene } from 'phaser';
 import logoImg from '../assets/img/phaser-logo.png';
 import playerImg from '../assets/img/carter-in-bed.png';
 import backgroundImg from '../assets/img/sky.png';
+import vehiclesImg from '../assets/img/vehicles.png';
 import { ProgressBar } from '../objects/progress-bar';
 import { palette } from '../colors';
 
@@ -79,6 +80,10 @@ export class BootScene extends Scene {
     this.load.spritesheet('player', playerImg, {
       frameWidth: 64,
       frameHeight: 32,
+    });
+    this.load.spritesheet('vehicles', vehiclesImg, {
+      frameWidth: 72,
+      frameHeight: 26,
     });
   }
 }

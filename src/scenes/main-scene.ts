@@ -2,6 +2,7 @@ import { Input, Scene, GameObjects } from 'phaser';
 import { DebugHUD } from '../objects/debug-hud';
 import { Player } from '../objects/player';
 import { Ground } from '../objects/ground';
+import { Vehicle } from '../objects/vehicle';
 
 export class MainScene extends Scene {
 
@@ -15,6 +16,7 @@ export class MainScene extends Scene {
 
   public ground: Ground;
   public player: Player;
+  public vehicles: GameObjects.Group;
 
   public bg: GameObjects.TileSprite;
 
@@ -53,6 +55,8 @@ export class MainScene extends Scene {
     this.player = new Player(this);
     this.debugHUD = new DebugHUD(this);
     this.physics.add.collider(this.player, this.ground);
+
+    this.vehicles = this.makeVehicles();
 
     const hOffset = -(this.cameras.main.width / 3);
     const vOffset = (
@@ -96,5 +100,21 @@ export class MainScene extends Scene {
       message,
     }).bringToTop('GameOver');
     this.scene.pause();
+  }
+
+  private makeVehicles(): GameObjects.Group {
+    const world = this.physics.world.bounds;
+    const spacing = 100;
+    const y = this.ground.body.top;
+    const group = this.add.group();
+
+    for (let x = (world.left + 800); x <= world.right; x += spacing) {
+      const vehicle = new Vehicle(this, x, y);
+      group.add(vehicle);
+    }
+
+    this.add.existing(group);
+
+    return group;
   }
 }

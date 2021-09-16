@@ -14,6 +14,7 @@ export class Player extends Physics.Arcade.Sprite {
 
     const { centerX, height } = this.scene.cameras.main;
 
+    this.setScale(2);
     this.setPosition(centerX, height - this.displayHeight / 2);
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
