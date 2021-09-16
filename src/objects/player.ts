@@ -5,7 +5,7 @@ export class Player extends Physics.Arcade.Sprite {
 
   public scene: MainScene;
 
-  public readonly JUMP_VELOCITY = 400;
+  public readonly JUMP_VELOCITY = 200;
 
   public body: Physics.Arcade.Body;
 
@@ -40,34 +40,6 @@ export class Player extends Physics.Arcade.Sprite {
 
     if (this.scene.keyboard.space.isDown && this.body.touching.down) {
       this.setVelocityY(-(this.JUMP_VELOCITY));
-    }
-
-    if (this.scene.keyboard.left.isDown) {
-      this.setVelocityX(-300);
-      if (onTheGround) {
-        this.anims.play('left', true);
-      } else {
-        this.faceLeft();
-      }
-    } else if (this.scene.keyboard.right.isDown) {
-      this.setVelocityX(300);
-      if (onTheGround) {
-        this.anims.play('right', true);
-      } else {
-        this.faceRight();
-      }
-    } else {
-      if (this.body.velocity.x !== 0) {
-        this.anims.stop();
-
-        if (this.body.velocity.x < 0) {
-          this.faceLeft();
-        } else {
-          this.faceRight();
-        }
-
-        this.setVelocityX(0);
-      }
     }
   }
 

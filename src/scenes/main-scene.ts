@@ -5,6 +5,8 @@ import { Ground } from '../objects/ground';
 
 export class MainScene extends Scene {
 
+  public isRunning = false;
+
   public keyboard: {
     space: Input.Keyboard.Key;
     left: Input.Keyboard.Key;
@@ -24,7 +26,7 @@ export class MainScene extends Scene {
   }
 
   preload() {
-    this.physics.world.setBounds(0, 0, 16000, 600);
+    this.physics.world.setBounds(0, 0, 10000, 600);
   }
 
   create() {
@@ -62,6 +64,12 @@ export class MainScene extends Scene {
   }
 
   update(time: number, delta: number) {
+    if (!this.isRunning && this.keyboard.space.isDown) {
+      this.isRunning = true;
+      this.startGame();
+      return;
+    }
+
     this.debugHUD.update(time, delta);
     this.player.update(time, delta);
 
@@ -78,7 +86,11 @@ export class MainScene extends Scene {
     }
   }
 
-  public gameOver(status: 'win' | 'lose', message = '') {
+  startGame() {
+    this.player.setVelocityX(150);
+  }
+
+  gameOver(status: 'win' | 'lose', message = '') {
     this.scene.launch('GameOver', {
       status,
       message,
