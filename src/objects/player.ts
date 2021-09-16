@@ -1,11 +1,11 @@
-import { Scene, Physics, Input, Math as PMath } from 'phaser';
+import { Scene, Physics, Math as PMath } from 'phaser';
 import { MainScene } from '../scenes/main-scene';
 
 export class Player extends Physics.Arcade.Sprite {
 
   public scene: MainScene;
 
-  public readonly JUMP_VELOCITY = 200;
+  public readonly JUMP_VELOCITY = 300;
 
   public body: Physics.Arcade.Body;
 
@@ -20,34 +20,23 @@ export class Player extends Physics.Arcade.Sprite {
 
     this.body.setBounce(0.3, 0.3);
 
-    this.scene.anims.create({
-      key: 'left',
-      frames: this.anims.generateFrameNumbers('player', { start: 0, end: 1 }),
-      frameRate: 10,
-      repeat: -1
-    });
-
-    this.scene.anims.create({
-      key: 'right',
-      frames: this.anims.generateFrameNumbers('player', { start: 4, end: 5 }),
-      frameRate: 10,
-      repeat: -1
-    });
+    // this.scene.anims.create({
+    //   key: 'jump',
+    //   frames: this.anims.generateFrameNumbers('player', { start: 0, end: 1 }),
+    //   frameRate: 10,
+    //   repeat: -1
+    // });
   }
 
   public update(time: number, delta: number) {
     const onTheGround = this.body.touching.down;
+    const isJumpingThreshold = 0.6 * this.JUMP_VELOCITY;
+    const canJumpAgain = (this.body.velocity.y >= isJumpingThreshold);
 
-    if (this.scene.keyboard.space.isDown && this.body.touching.down) {
-      this.setVelocityY(-(this.JUMP_VELOCITY));
+    if (this.scene.keyboard.space.isDown) {
+      if (onTheGround || canJumpAgain) {
+        this.setVelocityY(-(this.JUMP_VELOCITY));
+      }
     }
-  }
-
-  public faceLeft() {
-    this.setFrame(2);
-  }
-
-  public faceRight() {
-    this.setFrame(3);
   }
 }

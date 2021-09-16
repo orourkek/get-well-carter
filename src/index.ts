@@ -28,7 +28,7 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
       fps: 60,
       // debug: true,
       gravity: {
-        y: 300,
+        y: 500,
       },
     },
   },

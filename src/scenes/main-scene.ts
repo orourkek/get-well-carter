@@ -26,7 +26,7 @@ export class MainScene extends Scene {
   }
 
   preload() {
-    this.physics.world.setBounds(0, 0, 10000, 600);
+    this.physics.world.setBounds(0, 0, 20000, 600);
   }
 
   create() {
@@ -87,7 +87,7 @@ export class MainScene extends Scene {
   }
 
   startGame() {
-    this.player.setVelocityX(150);
+    this.player.setVelocityX(250);
   }
 
   gameOver(status: 'win' | 'lose', message = '') {
