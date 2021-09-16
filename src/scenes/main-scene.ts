@@ -23,7 +23,9 @@ export class MainScene extends Scene {
     (window as any).scene = this;
   }
 
-  preload() {}
+  preload() {
+    this.physics.world.setBounds(0, 0, 16000, 600);
+  }
 
   create() {
     const { centerX, centerY } = this.cameras.main;
@@ -49,6 +51,13 @@ export class MainScene extends Scene {
     this.player = new Player(this);
     this.debugHUD = new DebugHUD(this);
     this.physics.add.collider(this.player, this.ground);
+
+    const hOffset = -(this.cameras.main.width / 3);
+    const vOffset = (
+      (this.cameras.main.height / 3) - (this.player.displayHeight / 3)
+    );
+
+    this.cameras.main.startFollow(this.player, true, 0.5, 0, hOffset, vOffset);
     this.cameras.main.fadeIn(300, 0, 0, 0);
   }
 
