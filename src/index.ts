@@ -4,14 +4,14 @@ import { MainScene } from './scenes/main-scene';
 import { TitleScene } from './scenes/title-scene';
 import { BootScene } from './scenes/boot';
 import { GameOver } from './scenes/game-over';
-import { palette } from './colors';
+import { GolfScene } from './scenes/golf-scene';
 
-const gameConfig: Phaser.Types.Core.GameConfig = {
+export const gameConfig: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
   parent: 'game',
   width: 800,
   height: 600,
-  backgroundColor: palette.white.rgba,
+  backgroundColor: '#243963',
   render: {
     pixelArt: true,
   },
@@ -28,7 +28,7 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
       fps: 60,
       // debug: true,
       gravity: {
-        y: 500,
+        y: 600,
       },
     },
   },
@@ -36,6 +36,7 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
     BootScene,
     TitleScene,
     MainScene,
+    GolfScene,
     GameOver,
   ],
 };

@@ -9,10 +9,6 @@ export class TitleScene extends Scene {
     super('TitleScene');
   }
 
-  preload() {
-    this.scene.launch('MainScene').sendToBack('MainScene').sleep('MainScene');
-  }
-
   create() {
     const { width, height, centerX, centerY } = this.cameras.main;
 
@@ -21,20 +17,21 @@ export class TitleScene extends Scene {
       0,
       width,
       height,
-      palette.white.color,
+      Display.Color.HexStringToColor('#d1d3d6').color,
     ).setOrigin(0, 0);
 
-    const color1 = palette.red;
-    const color2 = palette.orange;
+    const color1 = Display.Color.HexStringToColor('#0e5b51');
+    const color2 = Display.Color.HexStringToColor('#418199');
 
-    this.title = this.add.text(centerX, centerY, '<insert name here>')
+    this.title = this.add.text(centerX, centerY, 'Get Well Carter')
       .setFontFamily('"Press Start 2P"')
       .setAlign('center')
       .setFontSize(64)
       .setWordWrapWidth(width - 64)
       .setOrigin(0.5, 0.5)
+      .setLineSpacing(16)
       .setColor(color1.rgba)
-      .setShadow(8, 8, palette.dark.rgba);
+      .setShadow(8, 8, '#333435');
 
     const tween = this.tweens.addCounter({
       from: 0,
@@ -57,12 +54,13 @@ export class TitleScene extends Scene {
       .setFontFamily('"Press Start 2P"')
       .setFontSize(18)
       .setOrigin(0.5, 0.5)
-      .setColor(palette.dark.rgba);
+      .setColor('#727882');
 
     this.input.keyboard.once('keydown', this.startGame, this);
   }
 
   startGame() {
-    this.scene.stop('TitleScene').bringToTop('MainScene').wake('MainScene');
+    this.scene.stop('TitleScene');
+    this.scene.start('MainScene');
   }
 }

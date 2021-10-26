@@ -2,14 +2,12 @@ import { GameObjects, Scene } from 'phaser';
 import { MainScene } from '../scenes/main-scene';
 
 export class DebugHUD extends GameObjects.Container {
-
-  public scene: MainScene;
-
-  private enabled: boolean;
+  private enabled: boolean = false;
   private text: GameObjects.Text;
 
-  public constructor(scene: Scene, enabled = false) {
+  public constructor(scene: MainScene, enabled = false) {
     super(scene, 16, 16);
+    this.scene = scene;
 
     this.setEnabled(enabled);
 

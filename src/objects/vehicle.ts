@@ -4,10 +4,10 @@ import { MainScene } from '../scenes/main-scene';
 export class Vehicle extends Physics.Arcade.Sprite {
 
   public scene: MainScene;
-  public body: Physics.Arcade.Body;
 
-  constructor(scene: Scene, x: number, y: number) {
+  constructor(scene: MainScene, x: number, y: number) {
     super(scene, x, y, 'vehicles');
+    this.scene = scene;
 
     this.setScale(3);
     this.setOrigin(0.5, 1);
